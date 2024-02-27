@@ -1,7 +1,5 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UserModule } from './components/user/user.module';
 import { MailerService } from './service/mailer/mailer.service';
@@ -22,7 +20,7 @@ import { PassportModule } from '@nestjs/passport';
     JwtModule,
 
   ],
-  controllers: [AppController],
-  providers: [AppService, MailerService, JwtService, OtpService, GoogleAuthService],
+  controllers: [],
+  providers: [ MailerService, JwtService, OtpService, GoogleAuthService],
 })
 export class AppModule { }
