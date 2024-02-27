@@ -3,12 +3,13 @@ import { ApiTags, ApiOperation, ApiCreatedResponse, ApiBadRequestResponse, ApiNo
 import { Response } from 'express';
 import { UserService } from './user.service';
 import { User } from './user.model';
-import { UserValidator } from '../../middlewares/user.validator';
 import { MailerService } from '../../service/mailer/mailer.service';
 import { JwtService } from 'src/service/jwt/jwt.service';
 import { UserUpdates } from 'src/dtos/update-user.dto';
 import { OtpService } from 'src/service/otp/otp.service';
 import { AuthGuard } from '@nestjs/passport';
+import { Password } from 'src/helpers/password.helpers';
+import { Validator } from 'src/validators/schema.validator';
 @Controller('users')
 @ApiTags('Items')
 export class UserController {
@@ -25,7 +26,7 @@ export class UserController {
   @ApiBadRequestResponse({ description: 'Bad Request' })
   @ApiUnauthorizedResponse({ description: 'Unauthorized' })
   async create(@Body() user: User, @Res() res: Response): Promise<void> {
-    const validation = UserValidator.validate(user);
+    const validation = Validator.validate(user);
     if (validation.error) {
       res.status(400).json({ error: validation.error.details[0].message });
     }
@@ -104,7 +105,7 @@ export class UserController {
 
 
     else {
-      const isMatch = await UserValidator.Match(req.password, user.password)
+      const isMatch = await Password.Match(req.password, user.password)
       if (isMatch) {
         const token = await this.jwtService.generateToken(user, '1h');
         const refreshToken = await this.jwtService.generateToken(user, '24h');
@@ -154,13 +155,13 @@ export class UserController {
     } else if (userExist instanceof Error) {
       res.status(400).json("Invalid ObjectId");
     } else {
-      const validation = UserValidator.validateUpdate(user);
+      const validation = Validator.validateUpdate(user);
 
       if (validation.error) {
         res.status(400).json({ error: validation.error.details[0].message });
       } else {
         if (user.password) {
-          user.password = await UserValidator.hashPassword(user.password)
+          user.password = await Password.hashPassword(user.password)
         }
         if (user.email) {
           const otpData = this.otpService.generateOTP()
