@@ -1,8 +1,9 @@
 import mongoose, { Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { UserValidator } from '../../middlewares/user.validator';
+import { UserValidator } from '../../validators/user.validator';
 import { User, UserDocument } from './user.model';
+import { Password } from 'src/helpers/password.helpers';
 @Injectable()
 export class UserService {
   constructor(@InjectModel(User.name) private readonly userModel: Model<UserDocument>) { }
@@ -16,7 +17,7 @@ export class UserService {
 
     }
     else {
-      newUser.password = await UserValidator.hashPassword(newUser.password)
+      newUser.password = await Password.hashPassword(newUser.password)
     }
     return await newUser.save();
   }

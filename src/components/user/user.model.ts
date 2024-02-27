@@ -40,11 +40,11 @@ export class User extends mongoose.Document {
   @Prop({ default: '' })
   description: string;
 
-  @ApiProperty({ maxLength: 50 }) // Use 'maxLength' instead of 'maxlength'
+  @ApiProperty({ maxLength: 50 }) 
   @Prop({ maxlength: 50 })
   city: string;
 
-  @ApiProperty({ maxLength: 50 }) // Use 'maxLength' instead of 'maxlength'
+  @ApiProperty({ maxLength: 50 }) 
   @Prop({ maxlength: 50 })
   from: string;
 
@@ -75,6 +75,80 @@ export class User extends mongoose.Document {
   @ApiProperty()
   @Prop({ default: '' })
   id: string;
+
+  @ApiProperty({ default: false })
+  @Prop({ default: false })
+  isTwoFactorEnabled: boolean;
+
+  @ApiProperty()
+  @Prop()
+  twoFactorMethod: string;
+
+  @ApiProperty()
+  @Prop()
+  twoFactorSecret: string;
+
+  @ApiProperty()
+  @Prop({ type: Map, of: String })
+  socialLinks: Map<string, string>;
+
+
+  @ApiProperty({ default: true })
+  @Prop({ default: true })
+  isActive: boolean;
+
+  @ApiProperty()
+  @Prop()
+  lastLogin: Date;
+
+  @ApiProperty()
+  @Prop({ default: 0 })
+  loginAttempts: number;
+
+  @ApiProperty()
+  @Prop()
+  lockUntil: Date;
+
+  @ApiProperty()
+  @Prop()
+  language: string;
+
+  @ApiProperty()
+  @Prop()
+  timezone: string;
+
+  @ApiProperty()
+  @Prop({ type: Object })
+  privacySettings: {
+    profileVisibility: string;
+    messagePrivacy: string;
+  };
+
+  @ApiProperty({ default: false })
+  @Prop({ default: false })
+  isAccessibilityModeEnabled: boolean;
+
+  @ApiProperty({ default: false })
+  @Prop({ default: false })
+  consentToDataProcessing: boolean;
+
+  @ApiProperty({ default: false })
+  @Prop({ default: false })
+  consentToMarketing: boolean;
+
+  @ApiProperty()
+  @Prop({ type: Map, of: String })
+  customFields: Map<string, string>;
+
+  @ApiProperty()
+  @Prop({ type: Object })
+  address: {
+    street: string;
+    city: string;
+    state: string;
+    postalCode: string;
+    country: string;
+  };
 }
 
 export type UserDocument = User & Document;
