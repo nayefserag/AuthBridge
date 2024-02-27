@@ -1,7 +1,5 @@
 <p align="center">
-  <a href="http://nestjs.com/" target="blank">
-    <img src="https://imgur.com/gallery/oIu48z7" width="400" alt="Nest Logo" />
-  </a>
+<a href="https://imgur.com/ii5Enhm"><img src="https://i.imgur.com/ii5Enhm.png" title="source: imgur.com" /></a>
 </p>
 
 <h1 align="center">AuthBridge</h1>
