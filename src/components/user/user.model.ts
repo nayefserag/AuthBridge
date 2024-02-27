@@ -1,14 +1,14 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { Document } from 'mongoose';
-import { ApiProperty } from '@nestjs/swagger'; // Import ApiProperty decorator
+import { ApiProperty } from '@nestjs/swagger'; 
 
 @Schema()
 export class User extends mongoose.Document {
-  @ApiProperty({ required: true }) // Add Swagger documentation
+  @ApiProperty({ required: true }) 
   @Prop({ required: true })
   name: string;
 
-  @ApiProperty({ required: true }) // Add Swagger documentation
+  @ApiProperty({ required: true }) 
   @Prop({ required: true })
   email: string;
 
