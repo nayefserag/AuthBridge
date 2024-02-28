@@ -3,7 +3,10 @@ import mongoose, { Document } from 'mongoose';
 import { ApiProperty } from '@nestjs/swagger'; 
 
 @Schema()
-export class User extends mongoose.Document {
+export class User {
+
+  _id: string;
+
   @ApiProperty({ required: true }) 
   @Prop({ required: true })
   name: string;

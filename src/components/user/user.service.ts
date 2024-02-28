@@ -1,15 +1,17 @@
-import mongoose, { Model } from 'mongoose';
+import mongoose from 'mongoose';
 import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { UserValidator } from '../../validators/user.validator';
-import { User, UserDocument } from './user.model';
+import { User } from './user.model';
 import { Password } from 'src/helpers/password.helpers';
+import { UserRepository } from './user.repo';
+import { CreateUserDto } from '../../dtos/user.dto';
 @Injectable()
 export class UserService {
-  constructor(@InjectModel(User.name) private readonly userModel: Model<UserDocument>) { }
+  constructor(
+    private readonly userRepo: UserRepository
+    ) { }
 
-  async create(user): Promise<User> {
-    const newUser = new this.userModel(user);
+  async create(user): Promise<CreateUserDto> {
+    let newUser = await this.userRepo.createUser(user)
     if (!user.password) {
       newUser.name = user.name.firstName + ' ' + user.name.lastName;
       newUser.isVerified = true
@@ -19,46 +21,47 @@ export class UserService {
     else {
       newUser.password = await Password.hashPassword(newUser.password)
     }
-    return await newUser.save();
+    newUser = await this.userRepo.createUser(user)
+    return newUser;
   }
-  async update(user: User): Promise<User> {
-    const user2 = await this.userModel.findByIdAndUpdate(user._id, user, { new: true });
+  async update(user: User): Promise<CreateUserDto> {
+    const user2 = await this.userRepo.findByIdAndUpdate(user._id, user);
     return user2
   }
 
-  async findAll(): Promise<User[]> {
-    return await this.userModel.find().exec();
+  async findAll(): Promise<CreateUserDto[]> {
+    return await this.userRepo.findAll();
   }
-  async findUser(email?: string | null): Promise<User | null> {
-    const user = await this.userModel.findOne({
-      email
-    });
+  async findUser(email?: string | null): Promise<CreateUserDto | null> {
+    const user = await this.userRepo.getUserByEmail(
+      {email}
+    );
     return user;
 
   }
-  async findUserById(id: string | null): Promise<Error | User> {
+  async findUserById(id: string | null): Promise<Error | CreateUserDto> {
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return new Error('Invalid ObjectId');
     }
     else {
 
-      const targetUser = await this.userModel.findById(id);
+      const targetUser = await this.userRepo.findById(id);
       return targetUser;
 
     }
   }
-  async updateUser(data: any, id: string): Promise<User | Error> {
+  async updateUser(data: any, id: string): Promise<CreateUserDto | Error> {
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return new Error('Invalid ObjectId');
     }
     else {
-      const targetUser = await this.userModel.findByIdAndUpdate(id, data, { new: true });
+      const targetUser = await this.userRepo.findByIdAndUpdate(id, data);
       return targetUser
     }
   }
 
-  async updateToken(id: string, newRefreshToken: string): Promise<User | null | void> {
-    await this.userModel.findByIdAndUpdate(id, { refreshToken: newRefreshToken }, { new: true });
+  async updateToken(id: string, newRefreshToken: string): Promise<CreateUserDto | null | void> {
+    await this.userRepo.findByIdAndUpdate(id, { refreshToken: newRefreshToken });
   }
 
 
