@@ -20,6 +20,29 @@ AuthBridge is a versatile authentication solution designed to simplify the user 
 
 - **Swagger Documentation:** The API endpoints in AuthBridge are documented using Swagger, providing a clear and interactive interface for developers to explore and understand the available endpoints, request/response formats, and authentication requirements.
 
+- **Dynamic Database Support:** AuthBridge can now dynamically connect to different databases based on application context, allowing for seamless integration across multiple applications with distinct databases.
+
+## Dynamic Database Configuration
+
+AuthBridge supports dynamic database connections, enabling it to serve multiple applications with separate databases using the same backend. This feature allows for a flexible and scalable authentication system that can adapt to various application requirements.
+
+### Configuration Steps:
+
+1. **Define Database Configurations:** Set up environment variables for each application's MongoDB URI, using a clear naming convention. For example, `ECOMMERCE_APP_MONGO_URI` for your eCommerce app and `SOCIAL_MEDIA_APP_MONGO_URI` for your social media app.
+
+2. **Specify the Application Context:** When launching AuthBridge, specify the target application using the `APP_NAME` environment variable. This determines which database configuration to use.
+
+### Example:
+
+To start AuthBridge for the eCommerce application, write in .env :
+
+```bash
+$ APP_NAME=ecommerceApp
+```
+then :
+```bash
+$ npm run start
+```
 ## Installation
 
 To set up AuthBridge locally, follow these steps:
