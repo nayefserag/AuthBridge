@@ -44,7 +44,7 @@ export class UserController {
         const otpData = this.otpService.generateOTP()
         newUser.otp = otpData.otp
         newUser.refreshToken = refreshToken
-        newUser.save()
+        await this.userService.updateUser(newUser, newUser._id);
         this.mailerService.sendOtpEmail(user.email, otpData.otp);
 
         res.header(process.env.JWT_TOKEN_NAME, token).status(201).json({
@@ -110,7 +110,7 @@ export class UserController {
         const token = await this.jwtService.generateToken(user, '1h');
         const refreshToken = await this.jwtService.generateToken(user, '24h');
         user.refreshToken = refreshToken;
-        await user.save()
+        await this.userService.updateToken(user._id, refreshToken);
         res.header(process.env.JWT_TOKEN_NAME, token).status(200).json({
           message: `Welcome To My App ${user.name} ^_^`,
           token,
@@ -195,7 +195,7 @@ export class UserController {
         const token = await this.jwtService.generateToken(userExist, '1h');
         const refreshToken = await this.jwtService.generateToken(userExist, '3d');
         userExist.refreshToken = refreshToken;
-        await userExist.save();
+        await this.userService.updateToken(userExist._id, refreshToken);
         res.header(process.env.JWT_TOKEN_NAME, token).status(200).json({
           message: `Welcome Again ${user.name.firstName + ' ' + user.name.lastName} To My App ^_^`,
           user,
@@ -207,7 +207,7 @@ export class UserController {
         const token = await this.jwtService.generateToken(newUser, '1h');
         const refreshToken = await this.jwtService.generateToken(newUser, '3d');
         newUser.refreshToken = refreshToken;
-        await newUser.save();
+        await this.userService.updateToken(newUser._id, refreshToken);
 
         res.header(process.env.JWT_TOKEN_NAME, token).status(201).json({
           message: `Thanks ${newUser.name} To Register In My App ^_^`,

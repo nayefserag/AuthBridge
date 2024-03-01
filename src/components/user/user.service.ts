@@ -24,7 +24,7 @@ export class UserService {
     newUser = await this.userRepo.createUser(user)
     return newUser;
   }
-  async update(user: User): Promise<CreateUserDto> {
+  async update(user: CreateUserDto): Promise<CreateUserDto> {
     const user2 = await this.userRepo.findByIdAndUpdate(user._id, user);
     return user2
   }

@@ -13,6 +13,9 @@ import {
 
 export class CreateUserDto {
   @ApiProperty()
+  _id: string
+
+  @ApiProperty()
   @IsNotEmpty()
   @IsString()
   name: string;

@@ -9,10 +9,12 @@ import { JwtModule } from './service/jwt/jwt.module';
 import { OtpService } from './service/otp/otp.service';
 import { GoogleAuthService } from './config/google-auth.config';
 import { PassportModule } from '@nestjs/passport';
+import { DatabaseModule } from './db/db.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
+    DatabaseModule.forApp(process.env.APP_NAME),
     MongooseModule.forRoot(process.env.MONGO_URL),
     PassportModule.register({ defaultStrategy: 'google' }),
     UserModule,

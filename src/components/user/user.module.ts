@@ -8,6 +8,7 @@ import { JwtService } from 'src/service/jwt/jwt.service';
 import { OtpService } from 'src/service/otp/otp.service';
 import { PassportModule } from '@nestjs/passport';
 import { GoogleAuthService } from 'src/config/google-auth.config';
+import { UserRepository } from './user.repo';
 
 @Module({
   imports:
@@ -15,7 +16,7 @@ import { GoogleAuthService } from 'src/config/google-auth.config';
       MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
       PassportModule.register({ defaultStrategy: 'google' }),
     ],
-  providers: [UserService, MailerService, OtpService, JwtService, GoogleAuthService],
+  providers: [UserService, MailerService, OtpService, JwtService, GoogleAuthService,UserRepository],
   controllers: [UserController],
   exports: [UserService],
 })
