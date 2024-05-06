@@ -1,8 +1,8 @@
+<h1 align="center">AuthBridge</h1>
 <p align="center">
-<a href="https://imgur.com/ii5Enhm"><img src="https://i.imgur.com/ii5Enhm.png" title="source: imgur.com" /></a>
+<a href="DALL_E-2024-02-28-01.33-removebg-preview.png"><img src="DALL_E-2024-02-28-01.33-removebg-preview.png" title="source: imgur.com" /></a>
 </p>
 
-<h1 align="center">AuthBridge</h1>
 
 ## Description
 
