@@ -152,6 +152,13 @@ export class User {
     postalCode: string;
     country: string;
   };
+
+  @ApiProperty()
+  @Prop({ type: Object })
+  location: {
+    type: 'Point';
+    coordinates: [number, number];
+  };
 }
 
 export type UserDocument = User & Document;
