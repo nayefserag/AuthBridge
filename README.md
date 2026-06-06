@@ -59,3 +59,7 @@ npm run test:cov
 ## 📄 License
 
 MIT
+
+---
+
+<sub>If this project helped you, consider giving it a ⭐</sub>
