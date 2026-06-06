@@ -5,6 +5,7 @@
 ![MongoDB](https://img.shields.io/badge/MongoDB-47A248?logo=mongodb&logoColor=white)
 ![Swagger](https://img.shields.io/badge/Swagger-85EA2D?logo=swagger&logoColor=black)
 ![License](https://img.shields.io/badge/license-MIT-green)
+![CI](https://github.com/nayefserag/AuthBridge/actions/workflows/ci.yml/badge.svg)
 
 A reusable **NestJS authentication service** that handles registration, login, and user management for multiple applications — with **standard email/password, Google OAuth, and OTP verification**, plus a **dynamic multi-database** design so one deployment can serve several apps.
 
